@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class User {
     private int iD;
     private Location location;
@@ -48,4 +50,27 @@ public class User {
 
         return fullName;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == this)
+            return true;
+
+        // Check if obj is an instance of User
+        if (!(obj instanceof User))
+            return false;
+
+        // typecast obj to User so that we can compare data members
+        User u = (User) obj;
+
+        // Compare the data members and return accordingly
+        return iD == u.iD &&
+                (location == u.location || (location != null && location.equals(u.getLocation()))) &&
+                (Objects.equals(surname, u.surname) || (surname != null && surname.equals(u.getSurname()))) &&
+                (Objects.equals(firstName, u.firstName) || (firstName != null && firstName.equals(u.getFirstName()))) &&
+                (Objects.equals(eMail, u.eMail) || (eMail != null && eMail.equals(u.geteMail()))) &&
+                (Objects.equals(iPAddress, u.iPAddress) || (iPAddress != null && iPAddress.equals(u.getiPAddress())));
+    }
+
 }

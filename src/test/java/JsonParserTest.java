@@ -4,18 +4,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class SingleJsonParserTest {
+public class JsonParserTest {
 
     private JsonObject crumbsAndDoiliesJson;
     private JsonObject provenGoodsJson;
+    private JsonObject nonDWPUserJson;
     private User cupcakeGemma;
     private User theHomer;
     private Location crumbsAndDoilies;
     private Location provenGoodsCo;
     private TestData testData;
+
 
     @BeforeEach
     void JsonObjectTest() {
@@ -28,8 +29,11 @@ public class SingleJsonParserTest {
         cupcakeGemma = new User(1,crumbsAndDoilies,"Cupcake", "Gemma", "cupcakegemma@test.com","111.22.333.444");
         theHomer = new User(2,provenGoodsCo,"Homer", "Doughnut", "provengoods@test.com","555.66.777.888");
 
-        crumbsAndDoiliesJson = testData.createTestJson(new JsonObject(),cupcakeGemma);
-        provenGoodsJson = testData.createTestJson(new JsonObject(),theHomer);
+        crumbsAndDoiliesJson = testData.createUserTestJson(new JsonObject(),cupcakeGemma);
+        provenGoodsJson = testData.createUserTestJson(new JsonObject(),theHomer);
+
+        nonDWPUserJson = new JsonObject();
+        nonDWPUserJson = testData.createTestJson(nonDWPUserJson);
 
     }
 
@@ -40,5 +44,15 @@ public class SingleJsonParserTest {
         assertNotEquals("London", provenGoodsJson.get("city").getAsString(), "Test should not return London for Newcastle location");
     }
 
+    @Test
+    @DisplayName("")
+    void buildUserFromJson() {
 
+        assertEquals(cupcakeGemma, UserJsonParser.buildUserFromJson(crumbsAndDoiliesJson));
+        assertNull(UserJsonParser.buildUserFromJson(nonDWPUserJson));
+
+        assertDoesNotThrow( () -> {
+            UserJsonParser.buildUserFromJson(nonDWPUserJson); });
+
+    }
 }
