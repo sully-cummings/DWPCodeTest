@@ -19,7 +19,7 @@ public class JsonParserTest {
 
 
     @BeforeEach
-    void JsonObjectTest() {
+    void initObjects() {
 
         testData = new TestData();
 
@@ -45,12 +45,13 @@ public class JsonParserTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Valid User object intantiated from Json valid for this program")
     void buildUserFromJson() {
 
         assertEquals(cupcakeGemma, UserJsonParser.buildUserFromJson(crumbsAndDoiliesJson));
         assertNull(UserJsonParser.buildUserFromJson(nonDWPUserJson));
 
+        //Null pointer exception handled when Json invalid for this program is provided
         assertDoesNotThrow( () -> {
             UserJsonParser.buildUserFromJson(nonDWPUserJson); });
 

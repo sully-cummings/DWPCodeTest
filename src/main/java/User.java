@@ -51,6 +51,11 @@ public class User {
         return fullName;
     }
 
+    /**
+     * Overridden equals method to ensure data members are used to measure equality
+     * @param obj User object to be compared with this
+     * @return boolean result of comparing all data members of this and obj
+     */
     @Override
     public boolean equals(Object obj) {
 
@@ -58,11 +63,10 @@ public class User {
             return true;
 
         // Check if obj is an instance of User
-        if (!(obj instanceof User))
+        if (!(obj instanceof User u))
             return false;
 
         // typecast obj to User so that we can compare data members
-        User u = (User) obj;
 
         // Compare the data members and return accordingly
         return iD == u.iD &&

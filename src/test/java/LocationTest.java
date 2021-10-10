@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LocationTest {
 
     private Location crumbsAndDoilies;
-    private Location provenGoods;
+    private Location provenGoods; //Uninitialised location
     private Location unKnownLondonLoc;
 
     @BeforeEach
@@ -18,7 +18,7 @@ public class LocationTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("City value should be correctly returned when not null")
     void testGetCity() {
         assertEquals("London",crumbsAndDoilies.getCity());
         assertNotEquals(unKnownLondonLoc.getCity(),crumbsAndDoilies.getCity());
@@ -26,14 +26,14 @@ public class LocationTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Latitude value should be correctly returned when not null")
     void testGetLatitude() {
         assertEquals(51.51234952905932,crumbsAndDoilies.getLatitude());
         assertThrows(NullPointerException.class, () -> provenGoods.getLatitude());
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Longitude value should be correctly returned when not null")
     void testLongitude() {
         assertEquals(-0.1381059294314849,crumbsAndDoilies.getLongitude());
         assertThrows(NullPointerException.class, () -> provenGoods.getLongitude());

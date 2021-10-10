@@ -14,6 +14,12 @@ public class JsonReader {
 
     }
 
+    /**
+     * Connect to specified API and throw error if response is not 200
+     * @param url address to connect to
+     * @throws IOException if connection fails
+     * @throws RuntimeException if response from URL is not 200
+     */
     private void connectToAPI(URL url) throws IOException {
 
         HttpURLConnection connection;
@@ -25,20 +31,27 @@ public class JsonReader {
             responseCode = connection.getResponseCode();
 
         if (responseCode != 200)
+            //Do not continue with program
             throw new RuntimeException(("HttpResponseCode: " + responseCode));
 
     }
 
+    /**
+     * Create string from Json API response
+     * @param url API address
+     * @return String API json response as String
+     */
     private String getJsonFromAPI(URL url) throws IOException {
 
         StringBuilder jsonAsString;
 
         this.connectToAPI(url);
-        Scanner scanner = new Scanner(url.openStream());
 
+        Scanner scanner = new Scanner(url.openStream());
         jsonAsString = new StringBuilder();
 
         while (scanner.hasNext()) {
+            //Build json string
           jsonAsString.append(scanner.nextLine());
         }
 
@@ -47,31 +60,40 @@ public class JsonReader {
         return jsonAsString.toString();
     }
 
+    /**
+     * Populate Json Array from API response
+     * @param url API address
+     * @return validUsers
+     */
     public JsonArray buildJsonArray(URL url) throws IOException {
-        JsonArray validUsers;
+
+        JsonArray users;
         JsonElement jsonTree;
-                String jsonAsString;
+        String jsonAsString;
         boolean isValidJson;
 
-         validUsers = null;
-         jsonTree =null;
-                jsonAsString =  this.getJsonFromAPI(url);
+        users = null;
+        jsonTree = null;
         isValidJson = false;
 
+        //Get string of API Json response
+        jsonAsString = this.getJsonFromAPI(url);
         JsonParser parser = new JsonParser();
 
         try {
-             jsonTree = parser.parse(jsonAsString);
+            //If string is not in expected json format, exception will be thrown
+            jsonTree = parser.parse(jsonAsString);
             isValidJson = true;
         } catch (Throwable e) {
+            //Handle and null will be returned
             System.out.println("Exception: " + e);
         }
 
-            if (isValidJson && jsonTree.isJsonArray())
-                validUsers = jsonTree.getAsJsonArray();
+        if (isValidJson && jsonTree.isJsonArray())
+            //Convert to Json Array
+            users = jsonTree.getAsJsonArray();
 
-
-       return validUsers;
+        return users;
 
     }
 

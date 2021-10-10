@@ -13,22 +13,20 @@ public class UserTest {
 
     @BeforeEach
     void initUser() {
-
         testUser = new User(1, new Location(41.668587885412926, -73.36475200152044,"Stars Hollow"),"Lorelai","Gilmore","l.gilmore@thedragonfly.com","111.22.333.444");
         duplicateUser = new User(1, new Location(41.668587885412926, -73.36475200152044,"Stars Hollow"),"Lorelai","Gilmore","l.gilmore@thedragonfly.com","111.22.333.444");
         similarUser = new User(1, new Location(41.668587885412926, -73.36475200152044,"Stars Hollow"),"Rory","Gilmore","l.gilmore@thedragonfly.com","111.22.333.444");
-
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("IDe should be correctly returned when not null")
     void testGetiD() {
         assertEquals(1,testUser.getiD());
         assertThrows(NullPointerException.class, () -> unInitUser.getiD());
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Locations correctly returned when not null")
     void testGetLocation() {
         Location testLoc;
         Location testLocNoCity;
@@ -38,27 +36,22 @@ public class UserTest {
 
         assertThrows(NullPointerException.class, () -> unInitUser.getLocation());
 
-        assertEquals(testLoc.getLatitude(),testUser.getLocation().getLatitude());
-        assertEquals(testLoc.getLongitude(),testUser.getLocation().getLongitude());
-        assertEquals(testLoc.getCity(),testUser.getLocation().getCity());
-
-        assertEquals(testLocNoCity.getLatitude(),testUser.getLocation().getLatitude());
-        assertEquals(testLocNoCity.getLongitude(),testUser.getLocation().getLongitude());
-        assertNotEquals(testLocNoCity.getCity(),testUser.getLocation().getCity());
+        //Only lat and lon are considered when comparing location objects
+        assertEquals(testLoc, testUser.getLocation());
+        assertEquals(testLocNoCity, testUser.getLocation());
 
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("First name should be correctly returned when not null")
     void testGetFirstName() {
         assertEquals("Lorelai",testUser.getFirstName());
         assertNotNull(testUser.getFirstName());
         assertThrows(NullPointerException.class, () -> unInitUser.getFirstName());
-
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Surname should be correctly returned when not null")
     void testGetSurname() {
         assertEquals("Gilmore",testUser.getSurname());
         assertNotNull(testUser.getSurname());
@@ -66,7 +59,7 @@ public class UserTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Email address should be correctly returned when not null")
     void testGetEMail() {
         assertEquals("l.gilmore@thedragonfly.com",testUser.geteMail());
         assertNotNull(testUser.geteMail());
@@ -74,7 +67,7 @@ public class UserTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("IP Address should be correctly returned when not null")
     void testGetiPAddress() {
         assertEquals("111.22.333.444",testUser.getiPAddress());
         assertNotNull(testUser.getiPAddress());
@@ -82,7 +75,7 @@ public class UserTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("First and last names should be concatenated with space between")
     void testGetFullName() {
         assertEquals("Lorelai Gilmore",testUser.getFullName());
         assertNotNull(testUser.getFullName());
@@ -90,11 +83,14 @@ public class UserTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Overridden equals method - objects are the same if all data members are the same")
     void testEquals() {
-        assertEquals(duplicateUser,testUser);
-        assertNotEquals(similarUser,testUser);
+        //Two distinct objects with identical data members
         assertThrows(NullPointerException.class, () -> unInitUser.equals(testUser));
+        assertEquals(duplicateUser,testUser);
+
+        //Two distinct objects with differing data members
+        assertNotEquals(similarUser,testUser);
     }
 
 
