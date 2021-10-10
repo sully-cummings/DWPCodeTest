@@ -1,7 +1,11 @@
-import org.json.simple.JsonArray;
-import org.json.simple.JsonObject;
+
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.nio.file.attribute.AclEntryType;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class LocationDataFilter {
@@ -24,36 +28,35 @@ public class LocationDataFilter {
         userJsonParser = new UserJsonParser();
         users = new User[data.size()];
 
-        Iterator i = data.stream().iterator();
-
-        while (i.hasNext()) {
-            //Create user obj from Json obj
-            User user = userJsonParser.buildUserFromJson((JsonObject) i.next());
+        for(JsonElement element : data){
+            JsonObject object = element.getAsJsonObject();
+            User user = userJsonParser.buildUserFromJson(object);
             users[count++] = user;
         }
         return users;
+
     }
 
-    public User[] filterUsersByLocation(JsonArray data) {
+    public HashMap<Integer,User> filterUsersByLocation(JsonArray data, HashMap<Integer,User> validUsers, boolean citySpecified) {
         DistanceMatrixCalculator distanceCalc;
         User[] users;
-        User[] validUsers;
         int i;
 
         distanceCalc = new DistanceMatrixCalculator();
         i = 0;
-        validUsers = new User[data.size()];
 
         users = this.createUsersFromJsonData(data);
 
         while (i< users.length) {
             User user = users[i];
-            if (distanceCalc.isTargetCity(user.getLocation(), targetLocation)) {
-                validUsers[i++] = user;
+            if (citySpecified) {
+                validUsers.put(user.getiD(),user);
+                i++;
                 continue;
             }
             if (distanceCalc.inRangeOfTarget(user.getLocation(), targetLocation, targetRadius)) {
-                validUsers[i++] = user;
+                validUsers.put(user.getiD(),user);
+                i++;
                 continue;
             }
 
@@ -63,6 +66,5 @@ public class LocationDataFilter {
         return validUsers;
 
     }
-
 
 }

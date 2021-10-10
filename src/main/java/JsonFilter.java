@@ -1,5 +1,8 @@
-import org.json.simple.JsonArray;
-import org.json.simple.JsonObject;
+
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.util.Iterator;
 
@@ -9,37 +12,31 @@ public class JsonFilter {
 
     }
 
-    public Object[] getAllValuesForKey(JsonArray data, String key) {
+    public String[] getAllStringValuesFromKey(JsonArray data, String key) {
 
-        Object[] dataValues;
+        String[] dataValues;
         int count;
 
         count = 0;
         dataValues = new String[data.size()];
 
-        Iterator i = data.stream().iterator();
-
-        while (i.hasNext()) {
-            JsonObject object = (JsonObject) i.next();
-            dataValues[count++] = object.get(key);
+        for(JsonElement element : data){
+            JsonObject object = element.getAsJsonObject();
+            dataValues[count++] = object.get(key).getAsString();
         }
 
         return dataValues;
     }
 
-    public JsonArray filterDataByKeyValue(JsonArray data, String key, Object value ) {
+    public JsonArray filterStringDataByKeyValue(JsonArray data, String key, String value ) {
 
         JsonArray filteredData;
-        int count;
 
-        count = 0;
         filteredData = new JsonArray();
 
-        Iterator i = data.stream().iterator();
-
-        while (i.hasNext()) {
-            JsonObject object = (JsonObject) i.next();
-            if (object.get(key).equals(value))
+        for(JsonElement element : data){
+            JsonObject object = element.getAsJsonObject();
+            if (object.get(key).getAsString().equals(value))
                 filteredData.add(object);
         }
 

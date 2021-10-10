@@ -13,9 +13,9 @@ public class LocationTest {
 
     @BeforeEach
     void createTestLocations() {
-        crumbsAndDoilies = new Location("London", 51.51234952905932, -0.1381059294314849);
-        provenGoods = new Location("Newcastle", 54.96957208399909, -1.5799921004370676);
-        centreOfLondon = new Location("Unknown",51.50735699315851, -0.12764836711676103);
+        crumbsAndDoilies = new Location( 51.51234952905932, -0.1381059294314849,"London");
+        provenGoods = new Location( 54.96957208399909, -1.5799921004370676,"Newcastle");
+        centreOfLondon = new Location(51.50735699315851, -0.12764836711676103,"Unknown");
     }
 
     @Test

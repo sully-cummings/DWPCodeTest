@@ -1,4 +1,5 @@
-import org.json.simple.JsonObject;
+
+import com.google.gson.JsonObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,8 +22,8 @@ public class SingleJsonParserTest {
 
         testData = new TestData();
 
-        crumbsAndDoilies = new Location("London", 51.51234952905932, -0.1381059294314849);
-        provenGoodsCo = new Location("Newcastle", 54.96957208399909, -1.5799921004370676);
+        crumbsAndDoilies = new Location(51.51234952905932, -0.1381059294314849,"London");
+        provenGoodsCo = new Location(54.96957208399909, -1.5799921004370676,"Newcastle");
 
         cupcakeGemma = new User(1,crumbsAndDoilies,"Cupcake", "Gemma", "cupcakegemma@test.com","111.22.333.444");
         theHomer = new User(2,provenGoodsCo,"Homer", "Doughnut", "provengoods@test.com","555.66.777.888");
@@ -35,8 +36,8 @@ public class SingleJsonParserTest {
     @Test
     @DisplayName("Json with London city should return true")
     void testGetCityFromJson() {
-        assertEquals("London", crumbsAndDoiliesJson.get("city"), "Test should return London for London location");
-        assertNotEquals("London", provenGoodsJson.get("city"), "Test should not return London for Newcastle location");
+        assertEquals("London", crumbsAndDoiliesJson.get("city").getAsString(), "Test should return London for London location");
+        assertNotEquals("London", provenGoodsJson.get("city").getAsString(), "Test should not return London for Newcastle location");
     }
 
 

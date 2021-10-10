@@ -1,4 +1,5 @@
-import org.json.simple.JsonArray;
+
+import com.google.gson.JsonArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,8 +39,8 @@ public class JsonFilterTest {
     @DisplayName("")
     void testGetNamesFromJson() {
 
-        String[] userNames = (String[]) filteredJson.getAllValuesForKey(users, "first_name");
-        String[] londonUserNames = (String[]) filteredJson.getAllValuesForKey(londonUsers, "first_name");
+        String[] userNames =  filteredJson.getAllStringValuesFromKey(users, "first_name");
+        String[] londonUserNames = filteredJson.getAllStringValuesFromKey(londonUsers, "first_name");
 
         System.out.println(Arrays.toString(userNames));
         System.out.println(Arrays.toString(londonUserNames));
@@ -48,9 +49,9 @@ public class JsonFilterTest {
     @Test
     @DisplayName("Json with London city should return true")
     void testFilterDataByKeyValue() {
-        assertEquals(londonUsers, filteredJson.filterDataByKeyValue(users, "city","London"), "User array should match london users when filtered by city of London");
-        assertNotEquals(londonUsers, filteredJson.filterDataByKeyValue(users, "city","Newcastle"), "User array should not match london users when filtered by city of Newcastle");
-        assertNotEquals(users, filteredJson.filterDataByKeyValue(users, "city","London"), "User array should change when filtered by city of London");
+        assertEquals(londonUsers, filteredJson.filterStringDataByKeyValue(users, "city","London"), "User array should match london users when filtered by city of London");
+        assertNotEquals(londonUsers, filteredJson.filterStringDataByKeyValue(users, "city","Newcastle"), "User array should not match london users when filtered by city of Newcastle");
+        assertNotEquals(users, filteredJson.filterStringDataByKeyValue(users, "city","London"), "User array should change when filtered by city of London");
     }
 
 }

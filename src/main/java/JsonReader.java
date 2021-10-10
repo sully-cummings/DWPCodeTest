@@ -1,8 +1,7 @@
-import org.json.simple.JSONValue;
-import org.json.simple.JsonArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -11,6 +10,9 @@ import java.util.Scanner;
 
 public class JsonReader {
 
+    public JsonReader() {
+
+    }
 
     private void connectToAPI(URL url) throws IOException {
 
@@ -27,24 +29,37 @@ public class JsonReader {
 
     private String getJsonFromAPI(URL url) throws IOException {
 
-        String jsonAsString = null;
+        StringBuilder jsonAsString;
 
         this.connectToAPI(url);
         Scanner scanner = new Scanner(url.openStream());
 
+        jsonAsString = new StringBuilder();
+
         while (scanner.hasNext()) {
-            jsonAsString += scanner.nextLine();
+          jsonAsString.append(scanner.nextLine());
         }
 
         scanner.close();
 
-        return jsonAsString;
+        return jsonAsString.toString();
     }
 
     public JsonArray buildJsonArray(URL url) throws IOException {
         JsonArray validUsers = null;
-        
-        return validUsers;
+        String jsonAsString;
+
+        jsonAsString =  this.getJsonFromAPI(url);
+
+        JsonParser parser = new JsonParser();
+        JsonElement jsonTree = parser.parse(jsonAsString);
+
+        if(jsonTree.isJsonArray()) {
+            validUsers = jsonTree.getAsJsonArray();
+        }
+
+       return validUsers;
 
     }
+
 }
