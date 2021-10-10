@@ -4,7 +4,12 @@ public class Location {
     private double latitude;
     private double longitude;
 
-    public Location (String city, double lat, double lon) {
+    public Location (double lat, double lon) {
+        this.latitude = lat;
+        this.longitude = lon;
+    }
+
+    public Location ( double lat, double lon,String city) {
         this.city = city;
         this.latitude = lat;
         this.longitude = lon;

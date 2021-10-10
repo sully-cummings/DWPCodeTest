@@ -1,5 +1,5 @@
-import org.json.simple.JsonArray;
-import org.json.simple.JsonObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 public class TestData {
 
@@ -34,15 +34,15 @@ public class TestData {
 
         private void createTestData() {
 
-        crumbsAndDoilies = new Location("London", 51.51234952905932, -0.1381059294314849);
-        centreOfLondon = new Location("London",51.50735699315851, -0.12764836711676103);
-        fortyNineMilesFromLondon = new Location ("Carlton",52.171098 , 0.33003330);
-        provenGoodsCo = new Location("Newcastle", 54.96957208399909, -1.5799921004370676);
+        crumbsAndDoilies = new Location( 51.51234952905932, -0.1381059294314849,"London");
+        centreOfLondon = new Location(51.50735699315851, -0.12764836711676103,"London");
+        fortyNineMilesFromLondon = new Location (52.171098 , 0.33003330,"Carlton");
+        provenGoodsCo = new Location(54.96957208399909, -1.5799921004370676,"Newcastle");
 
         kingCharlesI = new User(1,centreOfLondon,"King", "Charles I", "royalstatue@test.com","111.22.333.444");
         doctorPrincess = new User(2,fortyNineMilesFromLondon,"Doctor", "Princess", "pamhalpert@test.com","222.33.444.555");
-        cupcakeGemma = new User(1,crumbsAndDoilies,"Cupcake", "Gemma", "cupcakegemma@test.com","333.44.555.666");
-        theHomer = new User(2,provenGoodsCo,"Homer", "Doughnut", "provengoods@test.com","444.55.666.777");
+        cupcakeGemma = new User(3,crumbsAndDoilies,"Cupcake", "Gemma", "cupcakegemma@test.com","333.44.555.666");
+        theHomer = new User(4,provenGoodsCo,"Homer", "Doughnut", "provengoods@test.com","444.55.666.777");
 
         centreOfLondonJson = this.createTestJson(new JsonObject(),kingCharlesI);
         fortyNineMilesJson = this.createTestJson(new JsonObject(),doctorPrincess);
@@ -62,14 +62,14 @@ public class TestData {
     }
 
     public JsonObject createTestJson(JsonObject Json, User user) {
-        Json.put("id", user.getiD());
-        Json.put("first_name", user.getFirstName());
-        Json.put("last_name", user.getSurname());
-        Json.put("email", user.geteMail());
-        Json.put("ip_address", user.getiPAddress());
-        Json.put("city", user.getLocation().getCity());
-        Json.put("latitude", user.getLocation().getLatitude());
-        Json.put("longitude", user.getLocation().getLongitude());
+        Json.addProperty("id", user.getiD());
+        Json.addProperty("first_name", user.getFirstName());
+        Json.addProperty("last_name", user.getSurname());
+        Json.addProperty("email", user.geteMail());
+        Json.addProperty("ip_address", user.getiPAddress());
+        Json.addProperty("city", user.getLocation().getCity());
+        Json.addProperty("latitude", user.getLocation().getLatitude());
+        Json.addProperty("longitude", user.getLocation().getLongitude());
 
         return Json;
     }

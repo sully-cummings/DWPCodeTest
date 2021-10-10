@@ -44,7 +44,7 @@ public class User {
 
         String fullName;
 
-        fullName = firstName + "" + surname;
+        fullName = firstName + " " + surname;
 
         return fullName;
     }

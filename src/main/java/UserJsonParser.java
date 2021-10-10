@@ -1,4 +1,4 @@
-import org.json.simple.JsonObject;
+import com.google.gson.JsonObject;
 
 public class UserJsonParser {
 
@@ -12,10 +12,10 @@ public class UserJsonParser {
         User user;
 
         // Ensure city, lat and long values are correctly cast to String, Double and Double to create location obj
-        userLocation = new Location(json.get("city").toString(), Double.parseDouble(json.get("latitude").toString()), Double.parseDouble(json.get("longitude").toString()));
+        userLocation = new Location(json.get("latitude").getAsDouble(), json.get("longitude").getAsDouble());
 
         //Cast person json output to String to create person object
-        user = new User(Integer.parseInt(json.get("id").toString()), userLocation, json.get("first_name").toString(), json.get("last_name").toString(), json.get("email").toString(), json.get("ip_address").toString());
+        user = new User(Integer.parseInt(json.get("id").getAsString()), userLocation, json.get("first_name").getAsString(), json.get("last_name").getAsString(), json.get("email").getAsString(), json.get("ip_address").getAsString());
 
         return user;
     }

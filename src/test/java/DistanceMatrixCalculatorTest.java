@@ -18,12 +18,12 @@ public class DistanceMatrixCalculatorTest {
     @BeforeEach
     void createTestLocations() {
         matrix = new DistanceMatrixCalculator();
-        crumbsAndDoilies = new Location("London", 51.51234952905932, -0.1381059294314849);
-        FortyNineMilesFromLondon = new Location ("Hermitage",51.468659 , -1.2719679);
-        FiftyMilesFromLondon = new Location ("Emberton",52.126004 , -0.73730767);
-        FiftyOneMilesFromLondon = new Location("Chilton",51.567577 , -1.2870593);
-        centreOfLondon = new Location("London",51.50735699315851, -0.12764836711676103);
-        unknownLondonCoords = new Location("London", 51.51234952905932, -0.1381059294314849);
+        crumbsAndDoilies = new Location( 51.51234952905932, -0.1381059294314849,"London");
+        FortyNineMilesFromLondon = new Location (51.468659 , -1.2719679,"Hermitage");
+        FiftyMilesFromLondon = new Location (52.126004 , -0.73730767,"Emberton");
+        FiftyOneMilesFromLondon = new Location(51.567577 , -1.2870593,"Chilton");
+        centreOfLondon = new Location(51.50735699315851, -0.12764836711676103,"London");
+        unknownLondonCoords = new Location( 51.51234952905932, -0.1381059294314849,"London");
     }
 
     @Test
