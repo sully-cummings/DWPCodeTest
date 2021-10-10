@@ -27,6 +27,7 @@ public class LocationDataFilterTest {
             if (u != null)
             System.out.println(u.getFullName());
         }
+
     }
 
 }

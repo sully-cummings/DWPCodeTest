@@ -9,11 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.ParseException;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonReaderTest {
 
@@ -117,13 +115,25 @@ public class JsonReaderTest {
     void testBuildJsonArray() throws IOException {
 
         JsonArray testArray;
-        URL url;
+        URL validURL;
+        String expectedMessage;
+        String actualMessage;
+
+        assertThrows(NullPointerException.class, () -> reader.buildJsonArray(null));
+
+        URL badResponseURL = new URL("https://news.bbc.co.uk/%");
+        assertThrows(RuntimeException.class, () -> reader.buildJsonArray(badResponseURL));
+
+        URL incorrectURL = new URL("https://news.bbc.co.uk");
+        assertDoesNotThrow( () -> {
+            reader.buildJsonArray(incorrectURL);  });
+        assertNull(reader.buildJsonArray(incorrectURL));
 
         testArray = buildTestJsonArray();
 
         //Get users registered as living in London
-        url = new URL("https://bpdts-test-app.herokuapp.com/city/London/users");
-        array = reader.buildJsonArray(url);
+        validURL = new URL("https://bpdts-test-app.herokuapp.com/city/London/users");
+        array = reader.buildJsonArray(validURL);
 
         assertEquals(testArray, array);
 

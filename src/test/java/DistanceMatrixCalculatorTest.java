@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,6 +42,14 @@ public class DistanceMatrixCalculatorTest {
       // assertEquals(true,matrix.inRangeOfTarget(FiftyMilesFromLondon,  centreOfLondon,50) );
         assertEquals(true,matrix.inRangeOfTarget(centreOfLondon,  centreOfLondon,50) );
         assertEquals(false,matrix.inRangeOfTarget(FiftyOneMilesFromLondon,  centreOfLondon,50) );
+
+        assertThrows(NullPointerException.class, () -> matrix.inRangeOfTarget(null, centreOfLondon,50));
+
+        assertThrows(NullPointerException.class, () -> matrix.inRangeOfTarget(crumbsAndDoilies, null,50));
+
+        matrix.inRangeOfTarget(crumbsAndDoilies, centreOfLondon,0);
+        matrix.inRangeOfTarget(crumbsAndDoilies, centreOfLondon,-50);
+
     }
 
 }

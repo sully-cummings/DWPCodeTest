@@ -1,7 +1,7 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.stream.MalformedJsonException;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -16,14 +16,16 @@ public class JsonReader {
 
     private void connectToAPI(URL url) throws IOException {
 
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.connect();
-        int responseCode = connection.getResponseCode();
+        HttpURLConnection connection;
+        int responseCode;
+
+        connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+            responseCode = connection.getResponseCode();
 
         if (responseCode != 200)
             throw new RuntimeException(("HttpResponseCode: " + responseCode));
-
 
     }
 
@@ -46,17 +48,28 @@ public class JsonReader {
     }
 
     public JsonArray buildJsonArray(URL url) throws IOException {
-        JsonArray validUsers = null;
-        String jsonAsString;
+        JsonArray validUsers;
+        JsonElement jsonTree;
+                String jsonAsString;
+        boolean isValidJson;
 
-        jsonAsString =  this.getJsonFromAPI(url);
+         validUsers = null;
+         jsonTree =null;
+                jsonAsString =  this.getJsonFromAPI(url);
+        isValidJson = false;
 
         JsonParser parser = new JsonParser();
-        JsonElement jsonTree = parser.parse(jsonAsString);
 
-        if(jsonTree.isJsonArray()) {
-            validUsers = jsonTree.getAsJsonArray();
+        try {
+             jsonTree = parser.parse(jsonAsString);
+            isValidJson = true;
+        } catch (Throwable e) {
+            System.out.println("Exception: " + e);
         }
+
+            if (isValidJson && jsonTree.isJsonArray())
+                validUsers = jsonTree.getAsJsonArray();
+
 
        return validUsers;
 

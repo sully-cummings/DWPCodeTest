@@ -55,7 +55,8 @@ public class Process {
 
     private static void printLondonUsers() {
 
-        System.out.println("***The total number of people who are listed as either living in London,\nor whose current coordinates are within 50 miles of London is " + validUsers.size() + "***\n");
+        System.out.println("*** The total number of people who are listed as either living in London," +
+                "\nor whose current coordinates are within 50 miles of London is " + validUsers.size() + " ***");
         for (User u : validUsers.values()) {
             if (u != null)
                 System.out.println(u.getFullName());

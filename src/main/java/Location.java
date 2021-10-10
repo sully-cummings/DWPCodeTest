@@ -15,16 +15,6 @@ public class Location {
         this.longitude = lon;
     }
 
-    public String getLocation(double longitude, double latitude) {
-
-        String location;
-
-        location = this.city;
-        //TODO get coordinates
-
-        return location;
-    }
-
     public String getCity() {
         return city;
     }
@@ -35,5 +25,19 @@ public class Location {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == this)
+            return true;
+
+        // Check if obj is an instance of Location
+        if (!(obj instanceof Location l))
+            return false;
+
+        // Compare the data members and return accordingly
+        return latitude == l.getLatitude() && longitude == l.getLongitude();
     }
 }

@@ -44,10 +44,10 @@ public class TestData {
         cupcakeGemma = new User(3,crumbsAndDoilies,"Cupcake", "Gemma", "cupcakegemma@test.com","333.44.555.666");
         theHomer = new User(4,provenGoodsCo,"Homer", "Doughnut", "provengoods@test.com","444.55.666.777");
 
-        centreOfLondonJson = this.createTestJson(new JsonObject(),kingCharlesI);
-        fortyNineMilesJson = this.createTestJson(new JsonObject(),doctorPrincess);
-        crumbsAndDoiliesJson = this.createTestJson(new JsonObject(),cupcakeGemma);
-        provenGoodsJson = this.createTestJson(new JsonObject(),theHomer);
+        centreOfLondonJson = this.createUserTestJson(new JsonObject(),kingCharlesI);
+        fortyNineMilesJson = this.createUserTestJson(new JsonObject(),doctorPrincess);
+        crumbsAndDoiliesJson = this.createUserTestJson(new JsonObject(),cupcakeGemma);
+        provenGoodsJson = this.createUserTestJson(new JsonObject(),theHomer);
 
         users = new JsonArray();
         users.add(centreOfLondonJson);
@@ -61,7 +61,7 @@ public class TestData {
 
     }
 
-    public JsonObject createTestJson(JsonObject Json, User user) {
+    public JsonObject createUserTestJson(JsonObject Json, User user) {
         Json.addProperty("id", user.getiD());
         Json.addProperty("first_name", user.getFirstName());
         Json.addProperty("last_name", user.getSurname());
@@ -72,6 +72,13 @@ public class TestData {
         Json.addProperty("longitude", user.getLocation().getLongitude());
 
         return Json;
+    }
+
+    public JsonObject createTestJson(JsonObject json) {
+        json.addProperty("name", "frank");
+        json.addProperty("job", "developer");
+
+        return json;
     }
 
     public JsonArray getUsers() {
