@@ -26,7 +26,12 @@ public class JsonReaderTest {
 
     }
 
+    /**
+     * Create valid Json String
+     * @return testJson populated Json string
+     */
     String buildTestJson() {
+
         String testJson;
 
         testJson = """
@@ -90,7 +95,12 @@ public class JsonReaderTest {
         return testJson;
     }
 
+    /**
+     * Create Json Array from Json test string
+     * @return testDataArray populated Json Array
+     */
     JsonArray buildTestJsonArray() {
+
         JsonArray testDataArray;
         JsonParser parser;
         JsonElement jsonTree;
@@ -111,26 +121,28 @@ public class JsonReaderTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Json Array will be correctly returned when URL provided is valid and creates valid Json for this program")
     void testBuildJsonArray() throws IOException {
 
         JsonArray testArray;
         URL validURL;
-        String expectedMessage;
-        String actualMessage;
 
+        //Will not allow null URL value
         assertThrows(NullPointerException.class, () -> reader.buildJsonArray(null));
 
+        //Exception when response is no 200
         URL badResponseURL = new URL("https://news.bbc.co.uk/%");
         assertThrows(RuntimeException.class, () -> reader.buildJsonArray(badResponseURL));
 
+        //Catches exception when Json invald for this program
         URL incorrectURL = new URL("https://news.bbc.co.uk");
         assertDoesNotThrow( () -> {
             reader.buildJsonArray(incorrectURL);  });
+        //Ensure null is returned
         assertNull(reader.buildJsonArray(incorrectURL));
 
+        //Create array of only London residents
         testArray = buildTestJsonArray();
-
         //Get users registered as living in London
         validURL = new URL("https://bpdts-test-app.herokuapp.com/city/London/users");
         array = reader.buildJsonArray(validURL);
@@ -140,33 +152,28 @@ public class JsonReaderTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Stand alone test to support unique ID assumption")
     void testAllIDsUnique() throws IOException {
         JsonArray array;
         JsonReader reader;
-        JsonParser parser;
         HashMap<Integer, String> uniqueUsers;
-        int noOfUsers;
-        int noOfUniqueUsers;
         URL url;
 
+        reader = new JsonReader();
         uniqueUsers = new HashMap<>();
         url = new URL("https://bpdts-test-app.herokuapp.com/users");
 
-        reader = new JsonReader();
-
+        //Get JsonArray from API response
         array = reader.buildJsonArray(url);
-        noOfUsers = array.size();
 
         for (JsonElement element : array) {
+            //Use map to confirm presence of duplicates
             JsonObject object = element.getAsJsonObject();
             uniqueUsers.put(object.get("id").getAsInt(), object.get("last_name").getAsString());
         }
 
-        noOfUniqueUsers = uniqueUsers.size();
-
-        //How to list people living in London and current near london is based on the below assumptio
-        assertEquals(noOfUsers, noOfUniqueUsers, "Each user should have unique ID number");
+        //How to list people living in London and current near london is based on the below assumption
+        assertEquals(array.size(), uniqueUsers.size(), "Each user should have unique ID number");
 
     }
 

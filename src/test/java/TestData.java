@@ -24,12 +24,13 @@ public class TestData {
 
     public TestData(boolean createAllData) {
 
+        //Create all test data for test classes
         this.createTestData();
 
     }
 
     public TestData() {
-
+//Allow access to test data routines without creating all test objects
     }
 
         private void createTestData() {
@@ -61,7 +62,14 @@ public class TestData {
 
     }
 
+    /**
+     * Create Json object from User object
+     * @param Json initialised json object
+     * @param user object used to create json
+     * @return Json populated json object
+     */
     public JsonObject createUserTestJson(JsonObject Json, User user) {
+
         Json.addProperty("id", user.getiD());
         Json.addProperty("first_name", user.getFirstName());
         Json.addProperty("last_name", user.getSurname());
@@ -74,7 +82,13 @@ public class TestData {
         return Json;
     }
 
+    /**
+     * Create garbage Json data
+     * @param json initialised Json
+     * @return Json populated Json
+     */
     public JsonObject createTestJson(JsonObject json) {
+
         json.addProperty("name", "frank");
         json.addProperty("job", "developer");
 

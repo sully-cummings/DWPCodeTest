@@ -39,14 +39,18 @@ public class DistanceMatrixCalculatorTest {
     void testInRangeOfTarget(){
         assertEquals(true,matrix.inRangeOfTarget(crumbsAndDoilies, centreOfLondon,50) );
         assertEquals(true,matrix.inRangeOfTarget(FortyNineMilesFromLondon,  centreOfLondon,50) );
+
+      // Unable to create valid test for edge case of location at limit of radius, as radius is int and distances are calculated as doubles from coordinates
       // assertEquals(true,matrix.inRangeOfTarget(FiftyMilesFromLondon,  centreOfLondon,50) );
+
         assertEquals(true,matrix.inRangeOfTarget(centreOfLondon,  centreOfLondon,50) );
         assertEquals(false,matrix.inRangeOfTarget(FiftyOneMilesFromLondon,  centreOfLondon,50) );
 
+        //Null locations are not permitted
         assertThrows(NullPointerException.class, () -> matrix.inRangeOfTarget(null, centreOfLondon,50));
-
         assertThrows(NullPointerException.class, () -> matrix.inRangeOfTarget(crumbsAndDoilies, null,50));
 
+        //Testing radius edge cases
         matrix.inRangeOfTarget(crumbsAndDoilies, centreOfLondon,0);
         matrix.inRangeOfTarget(crumbsAndDoilies, centreOfLondon,-50);
 

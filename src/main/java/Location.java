@@ -27,6 +27,9 @@ public class Location {
         return longitude;
     }
 
+    /**
+     * Override equals method to ensure latitude and longitude data members are used to determine equality
+     */
     @Override
     public boolean equals(Object obj) {
 
@@ -37,7 +40,7 @@ public class Location {
         if (!(obj instanceof Location l))
             return false;
 
-        // Compare the data members and return accordingly
+        // No need to check city, matching coordinates mean same Location obj
         return latitude == l.getLatitude() && longitude == l.getLongitude();
     }
 }

@@ -20,13 +20,53 @@ public class LocationDataFilterTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Users will be filtered if city specified in routine call")
     void testFilterUsersByLocation() {
+
+        // Only users in and around London will be valid as using co-ordinates to filter when citySpecified is false
         validUsers = dataFilter.filterUsersByLocation(testData.getUsers(),validUsers, false);
         for (User u: validUsers.values()){
             if (u != null)
             System.out.println(u.getFullName());
         }
+
+        //Empty map
+        validUsers.clear();
+        System.out.println("\n");
+
+        // All users will be valid as no filtering applied when citySpecified is true
+        validUsers = dataFilter.filterUsersByLocation(testData.getUsers(),validUsers, true);
+        for (User u: validUsers.values()){
+            if (u != null)
+                System.out.println(u.getFullName());
+        }
+
+        //Empty map
+        validUsers.clear();
+        System.out.println("\n");
+
+        // All London users will be valid as using co-ordinates to filter when citySpecified is false
+        validUsers = dataFilter.filterUsersByLocation(testData.getLondonUsers(),validUsers, false);
+        for (User u: validUsers.values()){
+            if (u != null)
+                System.out.println(u.getFullName());
+        }
+
+        //Empty map
+        validUsers.clear();
+        System.out.println("\n");
+
+        // All London users will be valid as no filtering applied when citySpecified is true
+        validUsers = dataFilter.filterUsersByLocation(testData.getLondonUsers(),validUsers, true);
+        for (User u: validUsers.values()){
+            if (u != null)
+                System.out.println(u.getFullName());
+        }
+
+        //Empty map
+        validUsers.clear();
+        System.out.println("\n");
+
 
     }
 
